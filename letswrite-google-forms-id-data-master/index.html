@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+		<title>Google表單，輸入工號及量測體溫</title>
+		<meta property="og:image:width" content="1200"/>
+		<meta property="og:image:height" content="630"/>
+		<meta property="og:image:alt" content="Google表單，輸入ID後自動帶入其它欄位資料"/>
+		<link rel="shortcut icon" href="https://letswritetw.github.io/letswritetw/dist/img/logo_512.png"/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"/>
+		<link rel="stylesheet" href="dist/style.min.css"/>
+		<!-- Google Tag Manager-->
+	</head>
+	<body>
+		<!-- Google Tag Manager (noscript)-->
+		<noscript>
+			<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PGQ9WQT" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+		</noscript>
+		<div class="container" id="app">
+		<div class="double-wrap" :class="{ hide: !loading }">
+			<div class="double">
+				<div class="double-bounce1"></div>
+				<div class="double-bounce2"></div>
+			</div>
+		</div>
+		<section class="kv w-640"><img src="https://picsum.photos/640/360" width="640" height="360" alt="主視覺"/></section>
+		<section class="form w-640">
+			<div class="text-center">
+				<h1>Google表單，輸入工號及量測體溫</h1>
+			</div>
+			<div class="form-group">
+				<label for="main_id">請輸入工號</label>
+				<input class="form-control" id="main_id" type="number" v-model="id" @input="limitIdLen(id)"/>
+			</div>
+			<div class="two-col">
+			<div class="col">
+				<div class="form-group">
+					<label for="name">姓名</label>
+					<div class="prepend">
+						<input class="form-control" id="name" type="text" v-model="person.name" disabled="disabled"/>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="form-group">
+					<label for="department">部門</label>
+					<input class="form-control" id="department" type="tel" v-model="person.department" disabled="disabled"/>
+				</div>
+			</div>
+			
+			</div>
+							<div class="col">
+					<div class="form">
+						<label>Q1.今日量耳溫是否超過攝氏38度 或 額溫超過攝氏37度? </label>
+						<div v-for="(item,index) in temputares"><input :id="`temperature_${index}`" :value="index" v-model="person.temperature" type="radio" :disabled="person.name == undefined"/><label :for="`temperature_${index}`" style="display:inline;">{{ item }}</label></div>
+					</div>
+				</div>
+				<div class="col">
+					<div class="form-group">
+						<label for="children">Q2.家中有無孩童學校停課(12歲以下)，親戚被框列居家檢疫、居家隔離、自主健康管理或自認接觸確診者但尚未收到居家隔離單?</label>
+						<div v-for="(item,index) in children"><input :id="`children_${index}`" :value="index" v-model="person.children" type="radio" :disabled="person.name == undefined"/><label :for="`children_${index}`" style="display:inline;">{{ item }}</label></div>
+					</div>
+				</div>
+				<div class="col">
+					<div class="form-group">
+						<label for="msg">Q3.有第2題狀況者，請簡述於下方：(同樣狀況，只需說明ㄧ次。EX.女兒就讀00國小，依政府規定5/19起全國各級學校停課至5/28) </label>
+						<input class="form-control" id="msg" type="text" v-model="person.msg" :disabled="person.name == undefined"/>
+					</div>
+				</div>
+			<div class="submit"><a href="#" :class="{ disabled: person.name == undefined }" @click.prevent="submit">送出</a></div>
+		</section>
+		</div>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"></script>
+		<script src="src/main.js"></script>
+	</body>
+</html>
